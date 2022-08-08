@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:instagram_clone/resources/auth_methods.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:instagram_clone/widgets/text_field_input.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class SignupScreen extends StatefulWidget {
+  const SignupScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _bioController = TextEditingController();
@@ -46,6 +47,42 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 64,
               ),
               const SizedBox(height: 64),
+              Stack(
+                children: [
+                  CircleAvatar(
+                    radius: 64,
+                    backgroundColor: Colors.grey[300],
+                    backgroundImage: const NetworkImage(
+                        'https://avatars.githubusercontent.com/u/70325600?s=400&u=272e224a3bd49492011d2bc2d6caa1b9e1ddd726&v=4'),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: IconButton(
+                      icon: const Icon(
+                        Icons.add_a_photo,
+                        //color: blueColor,
+                      ),
+                      onPressed: () {},
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 24),
+              TextFieldInput(
+                textEditingController: _usernameController,
+                isPass: false,
+                hintText: 'Enter your username',
+                textInputType: TextInputType.text,
+              ),
+              const SizedBox(height: 24),
+              TextFieldInput(
+                textEditingController: _bioController,
+                isPass: false,
+                hintText: 'Enter your bio',
+                textInputType: TextInputType.text,
+              ),
+              const SizedBox(height: 24),
               TextFieldInput(
                 textEditingController: _emailController,
                 isPass: false,
@@ -60,9 +97,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 textInputType: TextInputType.text,
               ),
               const SizedBox(height: 24),
-              GestureDetector(
+              InkWell(
                 // ignore: avoid_print
-                onTap: () => {print("pressed")},
+                onTap: () async {
+                  String res = await AuthMethods().signUpUser(
+                    email: _emailController.text,
+                    password: _passwordController.text,
+                    username: _usernameController.text,
+                    bio: _bioController.text,
+                  );
+                  print(res);
+                },
                 child: Container(
                   width: double.infinity,
                   alignment: Alignment.center,
