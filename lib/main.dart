@@ -18,11 +18,11 @@ void main() async {
   if (kIsWeb) {
     await Firebase.initializeApp(
         options: const FirebaseOptions(
-      apiKey: "AIzaSyDbmvSAdSITkQBpYwordqjtfGsmZoh_ptI",
-      projectId: "instagram-clone-42dd5",
-      messagingSenderId: "1044954580313",
-      appId: "1:1044954580313:web:509a6aec1d35c827917848",
-      storageBucket: "instagram-clone-42dd5.appspot.com",
+        apiKey: "AIzaSyDbmvSAdSITkQBpYwordqjtfGsmZoh_ptI",
+        projectId: "instagram-clone-42dd5",
+        messagingSenderId: "1044954580313",
+        appId: "1:1044954580313:web:509a6aec1d35c827917848",
+        storageBucket: "instagram-clone-42dd5.appspot.com",
     ));
   } else {
     await Firebase.initializeApp();
@@ -53,6 +53,11 @@ class MyApp extends StatelessWidget {
         home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
             if (snapshot.connectionState == ConnectionState.active) {
               if (snapshot.hasData) {
                 return const ResponsiveLayout(
@@ -64,11 +69,6 @@ class MyApp extends StatelessWidget {
                   child: Text('${snapshot.error}'),
                 );
               }
-            }
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
             }
 
             return const LoginScreen();
