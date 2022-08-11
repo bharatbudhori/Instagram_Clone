@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:instagram_clone/models/user.dart' as model;
 import 'package:instagram_clone/providers/user_provider.dart';
 import 'package:instagram_clone/screens/add_post_screen.dart';
+import 'package:instagram_clone/screens/feed_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:provider/provider.dart';
 
@@ -50,7 +51,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
         physics: const NeverScrollableScrollPhysics(),
         //physics: const BouncingScrollPhysics(),
         children: [
-          Text('Feed'),
+          FeedScreen(),
           Text('search'),
           AddPostScreen(),
           Text('notify'),
