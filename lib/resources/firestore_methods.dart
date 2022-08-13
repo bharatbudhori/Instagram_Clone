@@ -60,4 +60,40 @@ class FirestoreMethods {
       print(e.toString());
     }
   }
+
+  Future<void> postComment(String postId, String text, String uid, String name,
+      String profilePic) async {
+    //String res = 'Some error occured';
+    try {
+      if (text.isNotEmpty) {
+        String commentId = const Uuid().v1();
+
+        await _firestore
+            .collection('posts')
+            .doc(postId)
+            .collection('comments')
+            .doc(commentId)
+            .set({
+          'text': text,
+          'uid': uid,
+          'profilePic': profilePic,
+          'datePublished': DateTime.now(),
+          'name': name,
+          'commentId': commentId,
+        });
+      } else {
+        print('Comment is empty');
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<void> deletePost(String postId) async {
+    try {
+      await _firestore.collection('posts').doc(postId).delete();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 }
