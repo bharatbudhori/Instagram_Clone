@@ -7,6 +7,8 @@ import 'package:instagram_clone/screens/feed_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:provider/provider.dart';
 
+import '../screens/search_screen.dart';
+
 class MobileScreenLayout extends StatefulWidget {
   const MobileScreenLayout({Key? key}) : super(key: key);
 
@@ -52,7 +54,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
         //physics: const BouncingScrollPhysics(),
         children: [
           FeedScreen(),
-          Text('search'),
+          SearchScreen(),
           AddPostScreen(),
           Text('notify'),
           Text('profile'),
