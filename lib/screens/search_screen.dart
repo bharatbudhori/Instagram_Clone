@@ -79,7 +79,7 @@ class _SearchScreenState extends State<SearchScreen> {
           : FutureBuilder(
               future: FirebaseFirestore.instance.collection('posts').get(),
               builder: ((context, snapshot) {
-                int len = (snapshot.data as dynamic).docs.length;
+                int len = 0;
                 if (!snapshot.hasData) {
                   return const Center(
                     child: CircularProgressIndicator(),
@@ -90,6 +90,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     child: CircularProgressIndicator(),
                   );
                 }
+                len = (snapshot.data as dynamic).docs.length;
                 return GridView.custom(
                   gridDelegate: SliverQuiltedGridDelegate(
                     crossAxisCount: 4,

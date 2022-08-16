@@ -78,7 +78,7 @@ class _PostCardState extends State<PostCard> {
                       children: [
                         Text(
                           widget.snap['username'],
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
                         )
@@ -120,7 +120,7 @@ class _PostCardState extends State<PostCard> {
                       ),
                     );
                   },
-                  icon: Icon(Icons.more_vert),
+                  icon: const Icon(Icons.more_vert),
                 )
               ],
             ),
