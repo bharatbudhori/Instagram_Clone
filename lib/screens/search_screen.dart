@@ -4,6 +4,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:instagram_clone/resources/firestore_methods.dart';
+import 'package:instagram_clone/screens/profile_screen.dart';
 
 import '../utils/colors.dart';
 
@@ -55,21 +56,30 @@ class _SearchScreenState extends State<SearchScreen> {
                 }
 
                 return ListView.builder(
-                  itemCount: (snapshot.data as dynamic).docs.length,
+                  itemCount: (snapshot.data! as dynamic).docs.length,
                   itemBuilder: (context, index) {
-                    return ListTile(
-                      leading: CircleAvatar(
-                        radius: 24,
-                        backgroundImage: NetworkImage(
-                          (snapshot.data as dynamic)
-                              .docs[index]
-                              .data()['photoUrl'],
+                    return InkWell(
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => ProfileScreen(
+                            uid: (snapshot.data! as dynamic).docs[index]['uid'],
+                          ),
                         ),
                       ),
-                      title: Text(
-                        (snapshot.data as dynamic)
-                            .docs[index]
-                            .data()['username'],
+                      child: ListTile(
+                        leading: CircleAvatar(
+                          radius: 24,
+                          backgroundImage: NetworkImage(
+                            (snapshot.data as dynamic)
+                                .docs[index]
+                                .data()['photoUrl'],
+                          ),
+                        ),
+                        title: Text(
+                          (snapshot.data as dynamic)
+                              .docs[index]
+                              .data()['username'],
+                        ),
                       ),
                     );
                   },
@@ -77,7 +87,10 @@ class _SearchScreenState extends State<SearchScreen> {
               },
             )
           : FutureBuilder(
-              future: FirebaseFirestore.instance.collection('posts').get(),
+              future: FirebaseFirestore.instance
+                  .collection('posts')
+                  .orderBy('datePublished', descending: true)
+                  .get(),
               builder: ((context, snapshot) {
                 int len = 0;
                 if (!snapshot.hasData) {
